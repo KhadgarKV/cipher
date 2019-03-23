@@ -1,0 +1,58 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        String cipherText = scanner.nextLine();
+        int key = scanner.nextInt();
+
+        int quantityRow = key;
+
+        String[][] arrayText = new String[quantityRow][cipherText.length() / key];
+
+
+        if (cipherText.length() % key != 0) {
+            for (int i = 0; i < cipherText.length() % key ; i++) {
+                arrayText[i] = new String[cipherText.length() / key + 1];
+            }
+        }
+
+
+
+        int count = 0;
+            for (int i = 0; i < key; i++) {         // Заполнение массива.
+                for (int j = 0; j < arrayText[i].length; j++) {
+                    arrayText[i][j] = "";
+                    arrayText[i][j] += cipherText.charAt(count++);
+               }
+            }
+
+
+        for (int i = 0; i < arrayText.length; i++) {
+            System.out.println(Arrays.toString(arrayText[i]));
+        }
+
+
+
+
+        String decryptText = "";
+        try {
+            for (int j = 0; j <= cipherText.length() / key; j++) {
+                for (int i = 0; i < key; i++) {
+                    decryptText += arrayText[i][j];
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e){
+
+        }
+
+        System.out.println(decryptText);
+        
+    }
+}
