@@ -1,0 +1,75 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        String text = scanner.nextLine();
+        System.out.println(text.length());
+
+        int key = scanner.nextInt(); // quantity column
+        int quantityRow = text.length() / key;
+
+        if (text.length() % key != 0) {
+            quantityRow = text.length() / key + 1;
+        }
+
+        int count = 0;
+
+        String[][] arrayText = new String[quantityRow][key];
+        if (text.length() % key != 0) {
+            arrayText[quantityRow - 1] = new String[text.length() % key];
+            for (int i = 0; i < quantityRow - 2; i++) {
+                arrayText[i] = new String[key];
+            }
+        }
+
+        for (int i = 0; i < arrayText.length; i++) {         // Заполнение массива.
+            for (int j = 0; j < arrayText[i].length; j++) {
+                arrayText[i][j] = "";
+                arrayText[i][j] = arrayText[i][j] + text.charAt(count++);
+            }
+        }
+
+        for (int i = 0; i < arrayText.length; i++) {
+            System.out.println(Arrays.toString(arrayText[i]));
+        }
+
+
+        String cipherText = "";
+
+        if (text.length() % key == 0) {
+
+            for (int j = 0; j < key; j++) {
+                for (int i = 0; i < quantityRow; i++) {
+                    cipherText += arrayText[i][j];
+                }
+            }
+
+        } else {
+            try {
+                for (int j = 0; j < key; j++) {
+                    for (int i = 0; i < quantityRow; i++) {
+                        cipherText += arrayText[i][j];
+                    }
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+
+            } finally {
+                for (int j = text.length() % key + 1; j < key; j++) {
+                    for (int i = 0; i < quantityRow - 1; i++) {
+                        cipherText += arrayText[i][j];
+                    }
+
+                }
+            }
+        }
+        System.out.println(cipherText);
+
+    }
+}
